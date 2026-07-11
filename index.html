@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SickleStrong — Take Control of Sickle Cell Care With Confidence</title>
+  <meta name="description" content="SickleStrong is a family care management platform for sickle cell disease. Track medications, symptoms, fevers, and share doctor-ready reports — for one child, multiple children, or yourself." />
+  <meta property="og:title" content="SickleStrong — Take Control of Sickle Cell Care With Confidence" />
+  <meta property="og:description" content="The family care platform built for sickle cell disease. Join 50 founding families for free lifetime access." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Simple Analytics -->
+  <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+
+  <!-- Google Analytics 4 placeholder -->
+  <!-- Replace G-XXXXXXXXXX with your GA4 measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Microsoft Clarity placeholder -->
+  <!-- Replace with your Clarity project ID from clarity.microsoft.com -->
+  <!--
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "YOUR_CLARITY_ID");
+  </script>
+  -->
+
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --teal:        #0ea89a;
+      --teal-dark:   #0a7a70;
+      --teal-faint:  #e8faf9;
+      --purple:      #6c3fcf;
+      --purple-light:#ede8fb;
+      --ink:         #0d0d14;
+      --ink-mid:     #2d2d3a;
+      --slate:       #5a5a72;
+      --mist:        #f4f3ff;
+      --white:       #ffffff;
+      --emergency:   #ef4444;
+      --border:      #e4e2f0;
+      --gold:        #f59e0b;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Sora', sans-serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 14px 40px;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(14,168,154,0.25);
+    }
+
+    .nav-name {
+      font-family: 'Sora', sans-serif;
+      font-size: 19px; font-weight: 800;
+      color: var(--ink); letter-spacing: -0.3px;
+    }
+
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn-nav-outline {
+      padding: 9px 18px; border-radius: 50px;
+      border: 1.5px solid var(--border);
+      font-size: 13px; font-weight: 600;
+      color: var(--ink); text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-nav-outline:hover { border-color: var(--teal); background: var(--teal-faint); }
+
+    .btn-nav-primary {
+      padding: 9px 20px; border-radius: 50px;
+      background: var(--ink); color: white;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity .2s;
+    }
+    .btn-nav-primary:hover { opacity: .82; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 90px 40px 80px;
+      background: linear-gradient(160deg, #fdfcff 0%, #f4f3ff 50%, #e8faf9 100%);
+    }
+
+    /* Signature element: large ambient orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 { width: 600px; height: 600px; background: rgba(108,63,207,.07); top: -200px; right: -150px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(14,168,154,.08); bottom: -100px; left: -100px; }
+    .orb-3 { width: 300px; height: 300px; background: rgba(245,158,11,.05); top: 100px; left: 40%; }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 1180px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr .9fr;
+      gap: 64px; align-items: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; border: 1.5px solid var(--border);
+      padding: 7px 14px; border-radius: 50px;
+      font-size: 12px; font-weight: 700;
+      color: var(--teal-dark); margin-bottom: 22px;
+      box-shadow: 0 2px 8px rgba(14,168,154,.08);
+    }
+
+    .hero-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 62px);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -2px; color: var(--ink);
+      margin-bottom: 22px;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-body {
+      font-size: 18px; line-height: 1.75;
+      color: var(--slate); max-width: 500px;
+      margin-bottom: 36px;
+    }
+
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 28px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      color: white; font-size: 15px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 8px 28px rgba(14,168,154,.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(14,168,154,.4); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 28px; border-radius: 50px;
+      border: 2px solid var(--border); color: var(--ink);
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: var(--teal); background: var(--teal-faint); }
+
+    .trust-row {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .trust-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: white; border: 1px solid var(--border);
+      padding: 7px 13px; border-radius: 50px;
+      font-size: 12px; font-weight: 600; color: var(--ink-mid);
+      box-shadow: 0 1px 6px rgba(0,0,0,.04);
+    }
+    .trust-pill .ck { color: var(--teal); font-size: 13px; }
+
+    /* ── HERO CARD ── */
+    .hero-card {
+      background: white; border-radius: 28px;
+      box-shadow: 0 24px 64px rgba(108,63,207,.12);
+      overflow: hidden;
+      position: relative; z-index: 1;
+    }
+
+    .hcard-head {
+      background: linear-gradient(135deg, var(--ink) 0%, #1a1040 60%, #0a3d38 100%);
+      padding: 28px 28px 20px;
+    }
+
+    .hcard-label {
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(14,168,154,.7); font-weight: 700; margin-bottom: 6px;
+    }
+
+    .hcard-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px; font-weight: 800; color: white; line-height: 1.3;
+    }
+
+    .hcard-body { padding: 20px 24px 24px; }
+
+    .stat-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 10px; margin-bottom: 16px;
+    }
+
+    .stat-box {
+      background: var(--mist); border-radius: 14px;
+      padding: 14px 10px; text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 24px; font-weight: 800;
+      color: var(--ink); line-height: 1;
+    }
+
+    .stat-lbl { font-size: 10px; color: var(--slate); font-weight: 600; margin-top: 3px; }
+
+    .child-row-card {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--mist); border-radius: 14px;
+      padding: 12px 14px; margin-bottom: 8px;
+    }
+
+    .child-av {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+
+    .child-cname { font-weight: 700; font-size: 14px; font-family: 'Sora', sans-serif; }
+    .child-csub { font-size: 11px; color: var(--slate); margin-top: 1px; }
+
+    .status-badge {
+      margin-left: auto; padding: 3px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; flex-shrink: 0;
+    }
+    .s-ok  { background: rgba(14,168,154,.12); color: var(--teal-dark); }
+    .s-watch { background: rgba(239,68,68,.1); color: var(--emergency); }
+
+    /* ── SECTIONS ── */
+    .section { padding: 88px 40px; max-width: 1180px; margin: 0 auto; }
+    .section-full { padding: 88px 40px; }
+
+    .eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 14px;
+    }
+
+    .section-h2 {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 800;
+      letter-spacing: -1px; line-height: 1.12;
+      color: var(--ink); margin-bottom: 18px;
+      max-width: 780px;
+    }
+
+    .section-body {
+      font-size: 17px; line-height: 1.75; color: var(--slate);
+      max-width: 600px; margin-bottom: 48px;
+    }
+
+    /* ── PROBLEM SECTION ── */
+    .problem-band { background: var(--mist); }
+
+    .problem-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 20px; max-width: 1180px; margin: 0 auto;
+    }
+
+    .prob-card {
+      background: white; border-radius: 22px;
+      padding: 28px; border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(108,63,207,.05);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .prob-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(108,63,207,.1); }
+
+    .prob-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(14,168,154,.1), rgba(108,63,207,.08));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+
+    .prob-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+    .prob-card p { font-size: 14px; line-height: 1.7; color: var(--slate); }
+
+    /* ── SOLUTION ── */
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+
+    .feature-list { list-style: none; }
+    .feature-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .feature-list li:last-child { border-bottom: none; }
+
+    .feat-icon-box {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--teal-faint); color: var(--teal-dark);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .feat-name { font-weight: 700; font-size: 15px; margin-bottom: 3px; font-family: 'Sora', sans-serif; }
+    .feat-desc { font-size: 13px; color: var(--slate); line-height: 1.5; }
+
+    .solution-visual {
+      background: linear-gradient(160deg, var(--ink) 0%, #1a1040 100%);
+      border-radius: 28px; padding: 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.15);
+    }
+
+    .sv-label {
+      font-size: 10px; letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(14,168,154,.7); font-weight: 700; margin-bottom: 14px;
+    }
+
+    .sv-row {
+      background: rgba(255,255,255,.06); border-radius: 14px;
+      padding: 14px 16px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .sv-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .sv-dot-teal { background: var(--teal); }
+    .sv-dot-ok   { background: #10b981; }
+    .sv-dot-warn { background: var(--emergency); }
+
+    .sv-name { font-weight: 700; font-size: 14px; color: white; }
+    .sv-sub  { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 1px; }
+    .sv-val  { margin-left: auto; font-size: 13px; font-weight: 700; }
+
+    /* ── BETA COUNTER ── */
+    .beta-band {
+      background: linear-gradient(135deg, var(--ink) 0%, #1a1040 60%, #0a3d38 100%);
+      padding: 80px 40px; text-align: center; position: relative; overflow: hidden;
+    }
+    .beta-band .orb-b1 {
+      position: absolute; width: 500px; height: 500px; border-radius: 50%;
+      background: rgba(14,168,154,.08); filter: blur(80px);
+      top: -200px; right: -100px; pointer-events: none;
+    }
+    .beta-band .orb-b2 {
+      position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(108,63,207,.1); filter: blur(80px);
+      bottom: -150px; left: -100px; pointer-events: none;
+    }
+
+    .beta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+    .beta-counter-box {
+      background: rgba(255,255,255,.06); border: 1.5px solid rgba(14,168,154,.3);
+      border-radius: 20px; padding: 28px 32px; margin-bottom: 32px;
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+    }
+
+    .beta-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 64px; font-weight: 800; color: white; line-height: 1;
+      letter-spacing: -3px;
+    }
+
+    .beta-num span { color: var(--teal); }
+
+    .beta-divider { width: 1px; height: 60px; background: rgba(255,255,255,.15); }
+
+    .beta-meta { text-align: left; }
+    .beta-meta-big { font-size: 22px; font-weight: 800; color: white; font-family: 'Sora', sans-serif; }
+    .beta-meta-sub { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+    /* Progress bar */
+    .beta-progress-track {
+      background: rgba(255,255,255,.1); border-radius: 50px; height: 8px;
+      margin-bottom: 10px; overflow: hidden;
+    }
+    .beta-progress-fill {
+      height: 100%; border-radius: 50px;
+      background: linear-gradient(90deg, var(--teal), var(--purple));
+      width: 8%; /* update this as families join */
+      transition: width 1s ease;
+    }
+    .beta-progress-label { font-size: 12px; color: rgba(255,255,255,.5); text-align: right; }
+
+    /* ── FOUNDER ── */
+    .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+    .founder-left { position: relative; }
+
+    .founder-quote-card {
+      background: white; border-radius: 24px; padding: 36px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 8px 40px rgba(108,63,207,.08);
+    }
+
+    .founder-quote-card blockquote {
+      font-size: 18px; line-height: 1.8; color: var(--ink-mid);
+      font-style: italic; margin-bottom: 24px;
+      border-left: 4px solid var(--teal); padding-left: 20px;
+    }
+
+    .founder-sig { display: flex; align-items: center; gap: 14px; }
+
+    .founder-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 20px; font-weight: 800;
+      font-family: 'Sora', sans-serif; flex-shrink: 0;
+    }
+
+    .founder-name { font-weight: 700; font-size: 15px; font-family: 'Sora', sans-serif; }
+    .founder-role { font-size: 12px; color: var(--slate); margin-top: 2px; }
+
+    .founder-sons {
+      display: flex; gap: 10px; margin-top: 20px;
+    }
+
+    .son-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--mist); border-radius: 50px;
+      padding: 8px 14px;
+    }
+
+    .son-chip-emoji { font-size: 18px; }
+    .son-chip-name { font-size: 12px; font-weight: 700; color: var(--ink-mid); }
+
+    .founder-right h2 { margin-bottom: 20px; }
+    .founder-right p { font-size: 15px; line-height: 1.85; color: var(--slate); margin-bottom: 16px; }
+
+    /* ── TESTIMONIAL ── */
+    .testimonial-band { background: var(--mist); }
+
+    .testimonial-card {
+      max-width: 720px; margin: 0 auto;
+      background: white; border-radius: 28px; padding: 48px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(108,63,207,.07);
+      text-align: center;
+    }
+
+    .testimonial-stars { font-size: 22px; letter-spacing: 3px; margin-bottom: 20px; }
+
+    .testimonial-card blockquote {
+      font-size: 22px; line-height: 1.7; color: var(--ink);
+      font-style: italic; font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .testimonial-author {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+
+    .test-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 18px; font-weight: 800;
+      font-family: 'Sora', sans-serif;
+    }
+
+    /* ── COMMUNITY ── */
+    .community-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+    .community-card {
+      background: linear-gradient(135deg, var(--ink), #1a1040);
+      border-radius: 24px; padding: 32px;
+      box-shadow: 0 16px 48px rgba(0,0,0,.15);
+    }
+
+    .community-card h3 {
+      font-size: 22px; font-weight: 800; color: white;
+      margin-bottom: 10px;
+    }
+    .community-card p { font-size: 14px; color: rgba(255,255,255,.6); line-height: 1.7; margin-bottom: 20px; }
+
+    .community-perks { list-style: none; margin-bottom: 24px; }
+    .community-perks li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 13px; color: rgba(255,255,255,.8);
+      padding: 7px 0; font-weight: 500;
+    }
+    .community-perks li::before { content: '✓'; color: var(--teal); font-weight: 800; flex-shrink: 0; }
+
+    .btn-fb {
+      width: 100%; padding: 13px; border: none; border-radius: 50px;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      color: white; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Sora', sans-serif;
+      box-shadow: 0 4px 16px rgba(14,168,154,.3);
+      transition: transform .2s;
+    }
+    .btn-fb:hover { transform: translateY(-2px); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 720px; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border); padding: 22px 0;
+      cursor: pointer;
+    }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 16px; font-weight: 700; color: var(--ink);
+      font-family: 'Sora', sans-serif;
+    }
+
+    .faq-toggle {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--mist); border: none; cursor: pointer;
+      font-size: 16px; color: var(--slate); flex-shrink: 0;
+      transition: background .2s, transform .3s;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .faq-item.open .faq-toggle {
+      background: var(--teal); color: white; transform: rotate(45deg);
+    }
+
+    .faq-a {
+      font-size: 14px; color: var(--slate); line-height: 1.75;
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, padding .35s;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-top: 12px; }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: linear-gradient(135deg, var(--ink) 0%, #1a1040 60%, #0a3d38 100%);
+      border-radius: 32px; margin: 0 40px 80px;
+      padding: 72px 48px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+
+    .final-cta .orb-f1 {
+      position: absolute; width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(14,168,154,.1); filter: blur(80px);
+      top: -150px; right: -100px; pointer-events: none;
+    }
+
+    .final-cta .orb-f2 {
+      position: absolute; width: 350px; height: 350px; border-radius: 50%;
+      background: rgba(108,63,207,.1); filter: blur(80px);
+      bottom: -120px; left: -80px; pointer-events: none;
+    }
+
+    .final-cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .final-cta h2 { font-size: clamp(28px,4vw,46px); font-weight: 800; color: white; letter-spacing: -1px; margin-bottom: 16px; }
+    .final-cta p { font-size: 17px; color: rgba(255,255,255,.6); max-width: 520px; margin: 0 auto 36px; line-height: 1.7; }
+
+    .final-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    .btn-white {
+      padding: 14px 28px; border-radius: 50px;
+      background: white; color: var(--ink);
+      font-size: 15px; font-weight: 800;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: opacity .2s;
+    }
+    .btn-white:hover { opacity: .88; }
+
+    .btn-outline-light {
+      padding: 14px 28px; border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,.2); color: white;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-outline-light:hover { background: rgba(255,255,255,.08); }
+
+    /* ── JOIN FORM ── */
+    .join-section { max-width: 1180px; margin: 0 auto; padding: 88px 40px; }
+
+    .join-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+    .join-card {
+      border-radius: 28px; padding: 3px;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      box-shadow: 0 20px 60px rgba(108,63,207,.2);
+    }
+
+    .join-inner {
+      background: white; border-radius: 26px; padding: 40px;
+    }
+
+    .join-inner h2 { font-size: 28px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
+    .join-inner p { font-size: 14px; color: var(--slate); line-height: 1.7; margin-bottom: 24px; }
+
+    .form-field { margin-bottom: 14px; }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%; padding: 13px 16px;
+      border: 1.5px solid var(--border); border-radius: 14px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif;
+      outline: none; transition: border-color .2s; color: var(--ink);
+    }
+    .form-field input:focus,
+    .form-field select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,168,154,.1); }
+
+    .btn-submit {
+      width: 100%; padding: 15px; background: var(--ink); color: white;
+      border: none; border-radius: 50px; font-size: 15px; font-weight: 700;
+      font-family: 'Sora', sans-serif; cursor: pointer; transition: opacity .2s;
+    }
+    .btn-submit:hover { opacity: .85; }
+
+    .form-note { text-align: center; font-size: 12px; color: var(--slate); margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px; text-align: center;
+      font-size: 13px; color: var(--slate);
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── FADE-UP ── */
+    .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-up.vis { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+    .delay-3 { transition-delay: .3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 20px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-card-wrap { display: none; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .founder-grid { grid-template-columns: 1fr; }
+      .community-grid { grid-template-columns: 1fr; }
+      .join-grid { grid-template-columns: 1fr; }
+      .section { padding: 64px 20px; }
+      .section-full { padding: 64px 20px; }
+      .final-cta { margin: 0 20px 60px; padding: 48px 24px; }
+      .hero { padding: 60px 20px 60px; }
+      .beta-counter-box { flex-direction: column; gap: 14px; text-align: center; }
+      .beta-divider { width: 60px; height: 1px; }
+      .beta-meta { text-align: center; }
+      .testimonial-card { padding: 32px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-icon">💙</div>
+    <span class="nav-name">SickleStrong</span>
+  </a>
+  <div class="nav-actions">
+    <a class="btn-nav-outline" href="https://sicklestrong-v2.netlify.app" target="_blank">Open App</a>
+    <a class="btn-nav-primary" href="#join">Join Free Beta</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-inner">
+    <div class="fade-up">
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        Now accepting founding beta families
+      </div>
+      <h1>Take Control of<br>Sickle Cell Care<br><em>With Confidence.</em></h1>
+      <p class="hero-body">
+        SickleStrong is a family care management platform built for sickle cell disease. 
+        Less stress. Better doctor visits. Peace of mind — for one child, multiple children, or yourself.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#join" onclick="trackEvent('hero_cta_clicked')">
+          Join Free Beta →
+        </a>
+        <a class="btn-ghost" href="https://sicklestrong-v2.netlify.app" target="_blank" onclick="trackEvent('hero_app_clicked')">
+          Try the App
+        </a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-pill"><span class="ck">✓</span> First 50 families free forever</div>
+        <div class="trust-pill"><span class="ck">✓</span> Built by an SCD parent</div>
+        <div class="trust-pill"><span class="ck">✓</span> Any age · any family structure</div>
+      </div>
+    </div>
+    <div class="hero-card-wrap fade-up delay-1">
+      <div class="hero-card">
+        <div class="hcard-head">
+          <div class="hcard-label">Family Dashboard</div>
+          <div class="hcard-title">Everything you need.<br>Everyone you care for.</div>
+        </div>
+        <div class="hcard-body">
+          <div class="stat-row">
+            <div class="stat-box">
+              <div class="stat-num">0</div>
+              <div class="stat-lbl">Crisis Days</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">✓</div>
+              <div class="stat-lbl">Meds Today</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">98°</div>
+              <div class="stat-lbl">Last Temp</div>
+            </div>
+          </div>
+          <div class="child-row-card">
+            <div class="child-av">👦🏾</div>
+            <div>
+              <div class="child-cname">Cam, 20</div>
+              <div class="child-csub">Self-managed · HbSS</div>
+            </div>
+            <div class="status-badge s-ok">Stable</div>
+          </div>
+          <div class="child-row-card">
+            <div class="child-av">🧒🏾</div>
+            <div>
+              <div class="child-cname">Jaxxon, 6</div>
+              <div class="child-csub">Parent-managed · HbSS</div>
+            </div>
+            <div class="status-badge s-watch">Monitor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<div class="section-full problem-band">
+  <div style="max-width:1180px;margin:0 auto;padding:0 40px;">
+    <div class="fade-up" style="text-align:center;margin-bottom:48px;">
+      <div class="eyebrow">The problem</div>
+      <h2 class="section-h2" style="margin:0 auto 16px;text-align:center;">
+        Managing SCD is exhausting.<br>The tools haven't kept up.
+      </h2>
+      <p class="section-body" style="margin:0 auto;text-align:center;">
+        Families managing sickle cell disease are organized, dedicated, and resourceful. 
+        But the information that matters most ends up scattered — and that costs time, clarity, and confidence.
+      </p>
+    </div>
+    <div class="problem-grid">
+      <div class="prob-card fade-up">
+        <div class="prob-icon">📋</div>
+        <h3>Scattered information</h3>
+        <p>Medications in a notebook. Temperatures in a text thread. Symptoms in your memory. There's no single source of truth — and appointments suffer for it.</p>
+      </div>
+      <div class="prob-card fade-up delay-1">
+        <div class="prob-icon">👨‍👩‍👧‍👦</div>
+        <h3>Multi-child complexity</h3>
+        <p>Tracking one child is hard. Multiple children — or a child and yourself — is a different challenge entirely. Most apps weren't built for this reality.</p>
+      </div>
+      <div class="prob-card fade-up delay-2">
+        <div class="prob-icon">🏥</div>
+        <h3>Underprepared appointments</h3>
+        <p>Doctors ask about the last 90 days. Parents piece together what they can remember. The most important conversations happen without the data to support them.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SOLUTION ── -->
+<div class="section">
+  <div class="solution-grid">
+    <div class="fade-up">
+      <div class="eyebrow">The solution</div>
+      <h2 class="section-h2">One platform.<br>Total confidence.</h2>
+      <p class="section-body">
+        SickleStrong brings everything together — medications, symptoms, fevers, hydration, 
+        and doctor reports — so you walk into every appointment prepared and every night feeling in control.
+      </p>
+      <ul class="feature-list">
+        <li>
+          <div class="feat-icon-box">🌡️</div>
+          <div>
+            <div class="feat-name">Emergency Fever Alerts</div>
+            <div class="feat-desc">Automatic alert at 101.3°F — the SCD-specific threshold. Never second-guess when to go to the ER.</div>
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon-box">💊</div>
+          <div>
+            <div class="feat-name">Medication Tracking</div>
+            <div class="feat-desc">Log medications with specific times. Mark doses taken. See adherence patterns over time.</div>
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon-box">🫁</div>
+          <div>
+            <div class="feat-name">Pain Body Map</div>
+            <div class="feat-desc">Front and back body map with 32 zones. Log severity, duration, location, and what helped.</div>
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon-box">📊</div>
+          <div>
+            <div class="feat-name">Doctor-Ready Reports</div>
+            <div class="feat-desc">90-day summaries with pain patterns, fever history, medication adherence — formatted for appointments.</div>
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon-box">👨‍👩‍👧</div>
+          <div>
+            <div class="feat-name">Family Account & Sharing</div>
+            <div class="feat-desc">Share a Family Code with parents, grandparents, and caregivers. Cloud sync is rolling out now.</div>
+          </div>
+        </li>
+        <li>
+          <div class="feat-icon-box">📲</div>
+          <div>
+            <div class="feat-name">Install to Your Home Screen</div>
+            <div class="feat-desc">No app store needed. Add SickleStrong to your phone in one tap — it even works offline.</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="fade-up delay-1">
+      <div class="solution-visual">
+        <div class="sv-label">Doctor Report Preview</div>
+        <div style="font-size:20px;font-weight:800;color:white;margin-bottom:18px;font-family:'Sora',sans-serif;letter-spacing:-.5px;">Last 90 Days — Jaxxon</div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-warn"></div>
+          <div>
+            <div class="sv-name">Pain Episodes</div>
+            <div class="sv-sub">Avg severity 3.2 / 5</div>
+          </div>
+          <div class="sv-val" style="color:#ff8aad;">7 episodes</div>
+        </div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-warn"></div>
+          <div>
+            <div class="sv-name">Fever Events</div>
+            <div class="sv-sub">≥ 101.3°F threshold</div>
+          </div>
+          <div class="sv-val" style="color:#ff8aad;">2 fevers</div>
+        </div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-ok"></div>
+          <div>
+            <div class="sv-name">Medication Adherence</div>
+            <div class="sv-sub">Hydroxyurea · Penicillin V</div>
+          </div>
+          <div class="sv-val" style="color:#5dffc7;">94%</div>
+        </div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-teal"></div>
+          <div>
+            <div class="sv-name">Hydration Average</div>
+            <div class="sv-sub">Goal: 60 oz / day</div>
+          </div>
+          <div class="sv-val" style="color:rgba(255,255,255,.7);">52 oz avg</div>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);">
+          <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;text-transform:uppercase;letter-spacing:.1em;">Emergency Contacts</div>
+          <div class="sv-row" style="margin-bottom:0;">
+            <div class="sv-dot sv-dot-teal"></div>
+            <div>
+              <div class="sv-name">Dr. Hematologist</div>
+              <div class="sv-sub">Primary SCD specialist</div>
+            </div>
+            <div class="sv-val" style="color:var(--teal);font-size:12px;">📞 Tap to call</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── BETA COUNTER ── -->
+<div class="beta-band">
+  <div class="orb-b1"></div>
+  <div class="orb-b2"></div>
+  <div class="beta-inner fade-up">
+    <div class="eyebrow" style="color:rgba(14,168,154,.8);">Founding Beta Program</div>
+    <h2 style="font-size:clamp(28px,4vw,44px);font-weight:800;color:white;letter-spacing:-1px;margin-bottom:24px;">
+      Only 50 Founding Families.<br>Free. Forever.
+    </h2>
+    <div class="beta-counter-box">
+      <div>
+        <div class="beta-num" id="betaCount"><span>4</span> / 50</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.4);margin-top:6px;text-align:center;">Founding families joined</div>
+      </div>
+      <div class="beta-divider"></div>
+      <div class="beta-meta">
+        <div class="beta-meta-big">46 spots remaining</div>
+        <div class="beta-meta-sub">Free lifetime access · No credit card</div>
+      </div>
+    </div>
+    <div class="beta-progress-track">
+      <div class="beta-progress-fill" id="betaBar"></div>
+    </div>
+    <div class="beta-progress-label">8% filled</div>
+    <p style="font-size:16px;color:rgba(255,255,255,.6);margin:28px 0 32px;line-height:1.7;">
+      Founding families shape every feature we build. In return, SickleStrong is free — forever. 
+      No catch. No hidden fees. You helped build it.
+    </p>
+    <a class="btn-primary" href="#join" style="font-size:16px;padding:16px 36px;" onclick="trackEvent('beta_cta_clicked')">
+      Claim Your Spot — Free →
+    </a>
+  </div>
+</div>
+
+<!-- ── FOUNDER ── -->
+<div class="section">
+  <div class="founder-grid">
+    <div class="fade-up">
+      <div class="founder-quote-card">
+        <blockquote>
+          "The information that matters most — medications, symptoms, temperatures, appointments — was scattered across notebooks, calendars, phone notes, and memory. I realized families needed a simpler way to stay organized and prepared. So I built SickleStrong."
+        </blockquote>
+        <div class="founder-sig">
+          <div class="founder-avatar">J</div>
+          <div>
+            <div class="founder-name">Jason Lucas</div>
+            <div class="founder-role">Founder · Father of two sons with SCD</div>
+          </div>
+        </div>
+        <div class="founder-sons">
+          <div class="son-chip">
+            <div class="son-chip-emoji">👦🏾</div>
+            <div class="son-chip-name">Cam, 20 · HbSS</div>
+          </div>
+          <div class="son-chip">
+            <div class="son-chip-emoji">🧒🏾</div>
+            <div class="son-chip-name">Jaxxon, 6 · HbSS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up delay-1">
+      <div class="eyebrow">Founder story</div>
+      <h2 class="section-h2">Built by a father who lived the problem.</h2>
+      <p>My name is Jason Lucas. As a father of two sons living with sickle cell disease, I experienced firsthand how difficult it can be to keep track of medications, hydration, symptoms, appointments, and care notes.</p>
+      <p>Cam is 20. Jaxxon is 6. Different ages, different needs, different stages of independence — but the same disease. I needed one place to manage both of them. Nothing existed.</p>
+      <p>So I built the tool I wished had always existed. Not a generic health app with a disclaimer at the bottom — a platform that actually understands what 101.3°F means, what a pain crisis looks like, and what an exhausted parent needs at 2am.</p>
+      <p>SickleStrong is not software. It's a parent's answer to a problem families have been carrying for years.</p>
+      <a class="btn-primary" href="#join" style="margin-top:8px;display:inline-flex;" onclick="trackEvent('founder_cta_clicked')">Join Beta Family →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── TESTIMONIAL ── -->
+<div class="section-full testimonial-band">
+  <div style="max-width:1180px;margin:0 auto;padding:0 40px;">
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+      <blockquote>
+        "Hello, my name is Courtney and my son Kyson has sickle cell anemia (SS). Looking forward to getting acquainted with the SickleStrong app. This will be a game changer for families."
+      </blockquote>
+      <div class="testimonial-author">
+        <div class="test-avatar">C</div>
+        <div style="text-align:left;">
+          <div style="font-weight:700;font-size:15px;font-family:'Sora',sans-serif;">Courtney</div>
+          <div style="font-size:12px;color:var(--slate);">Parent · Son Kyson has HbSS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMMUNITY ── -->
+<div class="section">
+  <div class="community-grid">
+    <div class="fade-up">
+      <div class="eyebrow">Community</div>
+      <h2 class="section-h2">SickleStrong is more than an app.</h2>
+      <p class="section-body">
+        App + Community + Education + Support. 
+        Our private Facebook community connects parents, caregivers, and families 
+        navigating sickle cell disease together — because no one should do this alone.
+      </p>
+      <div style="background:var(--mist);border-radius:20px;padding:24px;margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--teal-dark);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-family:'Sora',sans-serif;">Upcoming Event</div>
+        <div style="font-size:17px;font-weight:800;color:var(--ink);font-family:'Sora',sans-serif;margin-bottom:4px;">🌍 World Sickle Cell Day 2026</div>
+        <div style="font-size:13px;color:var(--slate);margin-bottom:12px;">June 19 · 24-hour virtual event · Free</div>
+        <a href="https://cayennewellness.org" target="_blank"
+           style="font-size:13px;font-weight:700;color:var(--teal);text-decoration:none;">
+          Register → cayennewellness.org
+        </a>
+      </div>
+    </div>
+    <div class="fade-up delay-1">
+      <div class="community-card">
+        <div style="font-size:32px;margin-bottom:12px;">👨‍👩‍👧‍👦</div>
+        <h3>SickleStrong Beta Family</h3>
+        <p>A private community of parents, caregivers, and families navigating sickle cell disease together. Real support. Real answers. Real people.</p>
+        <ul class="community-perks">
+          <li>Ask questions and get answers from other SCD families</li>
+          <li>Share wins, tips, and what's worked for your family</li>
+          <li>Direct access to Jason and the SickleStrong team</li>
+          <li>First access to new features before anyone else</li>
+          <li>Shape what we build next</li>
+        </ul>
+        <button class="btn-fb" onclick="window.open('https://www.facebook.com/groups/1343740994540360','_blank');trackEvent('fb_group_clicked');">
+          Join the Facebook Community →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── JOIN FORM ── -->
+<div id="join" class="join-section">
+  <div class="join-grid">
+    <div class="fade-up">
+      <div class="eyebrow">Become a founding family</div>
+      <h2 class="section-h2">Free lifetime access.<br>Help build what SCD families deserve.</h2>
+      <p class="section-body">
+        The first 50 founding families receive full app access — free forever. 
+        No subscription. No hidden fees. Just the tool your family needs and a voice in building it.
+      </p>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Sora',sans-serif;font-size:14px;flex-shrink:0;">1</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;font-family:'Sora',sans-serif;">Fill in your details</div>
+            <div style="font-size:13px;color:var(--slate);margin-top:2px;">Takes 60 seconds</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Sora',sans-serif;font-size:14px;flex-shrink:0;">2</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;font-family:'Sora',sans-serif;">Join the Beta Family group</div>
+            <div style="font-size:13px;color:var(--slate);margin-top:2px;">Private Facebook community</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Sora',sans-serif;font-size:14px;flex-shrink:0;">3</div>
+          <div>
+            <div style="font-weight:700;font-size:15px;font-family:'Sora',sans-serif;">Open the app — start tracking</div>
+            <div style="font-size:13px;color:var(--slate);margin-top:2px;">No download needed · works in browser</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="join-card fade-up delay-1">
+      <div class="join-inner">
+        <div class="eyebrow" style="margin-bottom:8px;">Join now</div>
+        <h2>Become a Founding Beta Family</h2>
+        <p>The first 50 families receive free lifetime access and help shape SickleStrong forever.</p>
+        <form id="betaForm">
+          <div class="form-field"><input type="text" name="name" placeholder="Your name" required /></div>
+          <div class="form-field"><input type="email" name="email" placeholder="Email address" required /></div>
+          <div class="form-field">
+            <select name="family_type">
+              <option value="">Who are you managing care for?</option>
+              <option value="one_child">One child with SCD</option>
+              <option value="multiple_children">Multiple children with SCD</option>
+              <option value="self">Myself (I have SCD)</option>
+              <option value="adult_family">Adult family member</option>
+              <option value="caregiver">I'm a caregiver / guardian</option>
+            </select>
+          </div>
+          <div class="form-field"><input type="text" name="children" placeholder="Ages of children (or your age if self-tracking)" /></div>
+          <div class="form-field"><input type="text" name="referral" placeholder="How did you hear about SickleStrong? (optional)" /></div>
+          <button type="submit" class="btn-submit">Claim Free Lifetime Access →</button>
+        </form>
+        <p class="form-note">After submitting you'll be taken to our private Beta Family Facebook group.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FAQ ── -->
+<div class="section" style="padding-top:0;">
+  <div class="eyebrow">FAQ</div>
+  <h2 class="section-h2">Questions families ask us.</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is SickleStrong really free?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">Yes — completely. The first 50 founding families receive free lifetime access. No subscription, no hidden fees, no "premium tier." After 50 families, new users will pay $9.99/month. Founding families never pay. Ever.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Does it work for adults with SCD, or just children?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">Both. SickleStrong supports families managing one child, multiple children, adults, or a mix. There's a dedicated self-tracking mode for teens and adults who want to manage their own care. Same features — adapted for your situation.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Do I need to download anything?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">No app store needed. SickleStrong runs directly in your phone's browser — just open the link and start. You can also install it to your home screen for a real app icon and offline access, right from your browser.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is my family's health data private and safe?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">Your data is stored locally on your device and never sold to third parties. Family accounts use encrypted storage. We're building toward full Supabase-backed cloud sync with row-level security — meaning your family's data is completely isolated from anyone else's.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can both parents use the same account?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">Yes. The Family Account feature lets you create a Family Code and share it with up to 5 family members — parents, grandparents, caregivers. Everyone can log data and see the same information. Full sync via Supabase is in active development.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What languages will SickleStrong support?
+        <button class="faq-toggle">+</button>
+      </div>
+      <div class="faq-a">English is live now. French, Spanish, and Portuguese are in development — because 93% of people living with SCD are in Africa, and we're building for the whole global community. Multi-language support launches soon. If you're a native French, Spanish, or Portuguese speaker and want to help us review translations, we'd love your involvement.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FINAL CTA ── -->
+<div class="final-cta">
+  <div class="orb-f1"></div>
+  <div class="orb-f2"></div>
+  <div class="final-cta-inner fade-up">
+    <h2>You do not have to carry this alone.</h2>
+    <p>Join a growing community of families helping build the SCD care platform they always wished existed.</p>
+    <div class="final-btns">
+      <a class="btn-white" href="#join" onclick="trackEvent('final_cta_clicked')">Join Free Beta →</a>
+      <a class="btn-outline-light" href="https://sicklestrong-v2.netlify.app" target="_blank">Try the App</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2026 SickleStrong. Built with 💙 by a parent for parents.</p>
+  <p style="margin-top:8px;">
+    <a href="https://sicklestrong-v2.netlify.app" target="_blank">Open App</a> &nbsp;·&nbsp;
+    <a href="https://www.facebook.com/groups/1343740994540360" target="_blank">Facebook Group</a> &nbsp;·&nbsp;
+    <a href="mailto:hello@sicklestrong.com">Contact</a>
+  </p>
+</footer>
+
+<script>
+  // ── FORM SUBMIT → FACEBOOK GROUP ──
+  document.getElementById('betaForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (typeof sa_event === 'function') sa_event('beta_form_submitted');
+    if (typeof gtag === 'function') gtag('event', 'beta_signup', { event_category: 'conversion' });
+    window.open('https://www.facebook.com/groups/1343740994540360', '_blank');
+  });
+
+  // ── ANALYTICS HELPER ──
+  function trackEvent(name) {
+    if (typeof sa_event === 'function') sa_event(name);
+    if (typeof gtag === 'function') gtag('event', name);
+  }
+
+  // ── FAQ TOGGLE ──
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+
+  // ── SCROLL ANIMATIONS ──
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  setTimeout(() => document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('vis')), 100);
+
+  // ── BETA PROGRESS BAR ANIMATE ──
+  setTimeout(() => {
+    const bar = document.getElementById('betaBar');
+    if (bar) bar.style.width = '8%';
+  }, 600);
+
+  // ── FACEBOOK GROUP CLICKS ──
+  document.querySelectorAll('[href*="facebook.com/groups"]').forEach(el => {
+    el.addEventListener('click', () => trackEvent('fb_group_click'));
+  });
+
+  // ── APP LINK CLICKS ──
+  document.querySelectorAll('[href*="sicklestrong-v2"]').forEach(el => {
+    el.addEventListener('click', () => trackEvent('app_link_click'));
+  });
+</script>
+</body>
+</html>
