@@ -1,9 +1,11 @@
 import type { Config, Context } from "@netlify/functions";
 
 // Saves a Founding Beta signup by calling the Supabase `claim_beta_signup`
-// RPC with the service-role key (RLS on `beta_signups` allows service-role
-// only). The DB function owns dedup + founding/waitlist assignment; this
-// function is a thin, validated pass-through.
+// RPC with the publishable anon key. The function is SECURITY DEFINER and
+// EXECUTE is granted only to anon on this one function -- anon has zero
+// direct grants or RLS policies on `beta_signups` itself, so this remains
+// the only door in. The DB function owns dedup + founding/waitlist
+// assignment; this function is a thin, validated pass-through.
 
 interface ClaimRow {
   out_email: string;
@@ -25,7 +27,7 @@ const jsonResponse = (data: unknown, status = 200): Response =>
 
 async function callRpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
   const url = Netlify.env.get("SUPABASE_URL");
-  const key = Netlify.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const key = Netlify.env.get("SUPABASE_ANON_KEY");
   if (!url || !key) throw new Error("missing_supabase_env");
 
   const res = await fetch(`${url}/rest/v1/rpc/${fn}`, {

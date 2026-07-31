@@ -1,7 +1,9 @@
 import type { Config, Context } from "@netlify/functions";
 
 // Returns live Founding Beta counts from the Supabase `beta_counts` RPC so the
-// landing page can render a real number instead of a hardcoded one.
+// landing page can render a real number instead of a hardcoded one. Calls
+// with the publishable anon key -- beta_counts is SECURITY DEFINER with
+// EXECUTE granted to anon, and nothing else on this table is anon-reachable.
 
 interface CountRow {
   founding_count: number;
@@ -11,7 +13,7 @@ interface CountRow {
 
 export default async (_req: Request, _context: Context): Promise<Response> => {
   const url = Netlify.env.get("SUPABASE_URL");
-  const key = Netlify.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const key = Netlify.env.get("SUPABASE_ANON_KEY");
   if (!url || !key) {
     return new Response(JSON.stringify({ error: "server_not_configured" }), {
       status: 500,
