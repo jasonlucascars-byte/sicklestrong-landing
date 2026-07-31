@@ -662,6 +662,151 @@
     footer a { color: var(--teal); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    /* ── INTERACTIVE DEMO ── */
+    .demo-band { background: var(--mist); }
+
+    .demo-head { text-align: center; margin-bottom: 44px; }
+
+    .demo-note-inline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; border: 1px solid var(--border);
+      padding: 8px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; color: var(--ink-mid);
+      box-shadow: 0 1px 6px rgba(0,0,0,.04);
+    }
+    .demo-note-inline .ck { color: var(--teal); font-weight: 800; }
+
+    .demo-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px; align-items: start;
+      max-width: 1180px; margin: 0 auto;
+    }
+
+    .demo-panel {
+      background: white; border: 1px solid var(--border);
+      border-radius: 24px; padding: 28px;
+      box-shadow: 0 8px 40px rgba(108,63,207,.07);
+    }
+
+    .demo-tabs {
+      display: flex; gap: 6px; background: var(--mist);
+      padding: 6px; border-radius: 50px; margin-bottom: 24px;
+    }
+    .demo-tab {
+      flex: 1; padding: 10px 12px; border: none; background: transparent;
+      border-radius: 50px; font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 13px; color: var(--slate);
+      cursor: pointer; transition: background .2s, color .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .demo-tab.active { background: white; color: var(--ink); box-shadow: 0 2px 8px rgba(108,63,207,.12); }
+    .demo-tab-emoji { font-size: 16px; }
+
+    .demo-module { margin-bottom: 24px; }
+    .demo-module:last-child { margin-bottom: 0; }
+    .demo-module-h {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .demo-module-title {
+      font-family: 'Sora', sans-serif; font-weight: 700; font-size: 14px;
+      color: var(--ink); display: flex; align-items: center; gap: 8px;
+    }
+    .demo-module-meta { font-size: 12px; font-weight: 700; color: var(--teal-dark); }
+    .demo-module-sub { font-size: 12px; color: var(--slate); margin: 14px 0 8px; }
+
+    .demo-med {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--mist); border: 1.5px solid transparent;
+      border-radius: 14px; padding: 11px 14px; margin-bottom: 8px;
+      cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .demo-med:last-child { margin-bottom: 0; }
+    .demo-med:hover { border-color: var(--border); }
+    .demo-med.taken { background: var(--teal-faint); border-color: rgba(14,168,154,.35); }
+    .demo-check {
+      width: 24px; height: 24px; border-radius: 8px;
+      border: 2px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: white; transition: background .2s, border-color .2s;
+    }
+    .demo-med.taken .demo-check { background: var(--teal); border-color: var(--teal); }
+    .demo-med-name { font-weight: 700; font-size: 14px; font-family: 'Sora', sans-serif; }
+    .demo-med-time { font-size: 11px; color: var(--slate); margin-top: 1px; }
+
+    .demo-bar-track {
+      background: var(--mist); border-radius: 50px; height: 10px;
+      overflow: hidden; margin: 0 0 12px;
+    }
+    .demo-bar-fill {
+      height: 100%; border-radius: 50px; width: 0;
+      background: linear-gradient(90deg, var(--teal), var(--purple));
+      transition: width .4s ease;
+    }
+
+    .demo-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .demo-btn {
+      padding: 9px 15px; border-radius: 50px;
+      border: 1.5px solid var(--border); background: white;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px;
+      color: var(--ink); cursor: pointer;
+      transition: border-color .2s, background .2s, transform .1s;
+    }
+    .demo-btn:hover { border-color: var(--teal); background: var(--teal-faint); }
+    .demo-btn:active { transform: scale(.96); }
+    .demo-btn.sel { background: var(--ink); color: white; border-color: var(--ink); }
+    .demo-btn.warn:hover { border-color: var(--emergency); background: rgba(239,68,68,.06); }
+    .demo-btn.warn.sel { background: var(--emergency); border-color: var(--emergency); }
+    .demo-btn.ghost { margin-left: auto; border-style: dashed; color: var(--slate); }
+
+    .demo-chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .demo-chip {
+      width: 38px; height: 38px; border-radius: 11px;
+      border: 1.5px solid var(--border); background: white;
+      font-weight: 800; font-size: 14px; color: var(--slate);
+      cursor: pointer; transition: all .15s; font-family: 'Sora', sans-serif;
+    }
+    .demo-chip:hover { border-color: var(--teal); }
+    .demo-chip.sel { background: var(--ink); color: white; border-color: var(--ink); }
+    .demo-select {
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--border);
+      border-radius: 12px; font-size: 13px; font-family: 'DM Sans', sans-serif;
+      color: var(--ink); margin-top: 10px; outline: none; transition: border-color .2s;
+    }
+    .demo-select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(14,168,154,.1); }
+
+    /* summary card — echoes the Doctor Report preview in the Solution section */
+    .demo-summary {
+      background: linear-gradient(160deg, var(--ink) 0%, #1a1040 100%);
+      border-radius: 24px; padding: 28px;
+      box-shadow: 0 24px 64px rgba(0,0,0,.15); position: relative;
+    }
+    .demo-sample-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: rgba(245,158,11,.15); color: var(--gold);
+      border: 1px solid rgba(245,158,11,.4);
+      font-size: 10px; font-weight: 800; letter-spacing: .1em;
+      text-transform: uppercase; padding: 5px 10px; border-radius: 50px;
+    }
+    .demo-summary-title {
+      font-size: 20px; font-weight: 800; color: white;
+      font-family: 'Sora', sans-serif; letter-spacing: -.5px; margin-bottom: 4px;
+    }
+    .demo-summary-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-bottom: 18px; }
+    .demo-alert {
+      display: none; align-items: center; gap: 10px;
+      background: rgba(239,68,68,.14); border: 1px solid rgba(239,68,68,.4);
+      border-radius: 12px; padding: 11px 14px; margin-bottom: 14px;
+    }
+    .demo-alert.show { display: flex; }
+    .demo-alert-txt { font-size: 12px; font-weight: 700; color: #ff9db1; line-height: 1.45; }
+    .demo-report-note {
+      margin-top: 18px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: 12px; color: rgba(255,255,255,.55); line-height: 1.6;
+    }
+    .demo-report-note strong { color: var(--teal); }
+
     /* ── FADE-UP ── */
     .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
     .fade-up.vis { opacity: 1; transform: translateY(0); }
@@ -688,6 +833,7 @@
       .beta-meta { text-align: center; }
       .testimonial-card { padding: 32px 20px; }
       .testimonial-grid { grid-template-columns: 1fr; gap: 20px; }
+      .demo-grid { grid-template-columns: 1fr; gap: 20px; }
     }
   </style>
 </head>
@@ -700,6 +846,7 @@
     <span class="nav-name">SickleStrong</span>
   </a>
   <div class="nav-actions">
+    <a class="btn-nav-outline" href="#try-it">Try It Live</a>
     <a class="btn-nav-outline" href="https://sicklestrong-v2.netlify.app" target="_blank">Open App</a>
     <a class="btn-nav-primary" href="#join">Join Free Beta</a>
   </div>
@@ -912,6 +1059,137 @@
             </div>
             <div class="sv-val" style="color:var(--teal);font-size:12px;">📞 Tap to call</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── INTERACTIVE DEMO ── -->
+<div id="try-it" class="section-full demo-band">
+  <div style="max-width:1180px;margin:0 auto;padding:0 40px;">
+    <div class="demo-head fade-up">
+      <div class="eyebrow" style="text-align:center;">Try it live</div>
+      <h2 class="section-h2" style="margin:0 auto 16px;text-align:center;">See exactly how a day works.</h2>
+      <p class="section-body" style="margin:0 auto 18px;text-align:center;">
+        A working preview of the daily dashboard. Switch between two sample family members, check off
+        medications, add hydration in oz, and log a pain or temperature entry — and watch the Doctor
+        Report summary update in real time.
+      </p>
+      <div class="demo-note-inline"><span class="ck">✓</span> No account, no email — just explore. Nothing you do here is saved.</div>
+    </div>
+
+    <div class="demo-grid fade-up delay-1">
+      <!-- interactive controls -->
+      <div class="demo-panel">
+        <div class="demo-tabs" role="tablist" aria-label="Sample family members">
+          <button class="demo-tab active" data-profile="amir" onclick="demoSwitch('amir')">
+            <span class="demo-tab-emoji">🧒🏽</span> Amir, 9
+          </button>
+          <button class="demo-tab" data-profile="jordan" onclick="demoSwitch('jordan')">
+            <span class="demo-tab-emoji">🧑🏽</span> Jordan, 24
+          </button>
+        </div>
+
+        <div class="demo-module">
+          <div class="demo-module-h">
+            <div class="demo-module-title">💊 Medications</div>
+            <div class="demo-module-meta" id="demoMedMeta">0 / 3 taken</div>
+          </div>
+          <div id="demoMeds"></div>
+        </div>
+
+        <div class="demo-module">
+          <div class="demo-module-h">
+            <div class="demo-module-title">💧 Hydration</div>
+            <div class="demo-module-meta" id="demoHydroMeta">16 / 48 oz</div>
+          </div>
+          <div class="demo-bar-track"><div class="demo-bar-fill" id="demoHydroBar"></div></div>
+          <div class="demo-btn-row">
+            <button class="demo-btn" onclick="demoAddWater(8)">+ 8 oz</button>
+            <button class="demo-btn" onclick="demoAddWater(12)">+ 12 oz</button>
+            <button class="demo-btn ghost" onclick="demoResetWater()">Reset</button>
+          </div>
+        </div>
+
+        <div class="demo-module">
+          <div class="demo-module-h">
+            <div class="demo-module-title">🌡️ Log a symptom</div>
+          </div>
+          <div class="demo-module-sub" style="margin-top:0;">Temperature</div>
+          <div class="demo-btn-row" id="demoTempBtns">
+            <button class="demo-btn" data-temp="98.6" onclick="demoLogTemp(98.6,this)">98.6°F</button>
+            <button class="demo-btn" data-temp="100.4" onclick="demoLogTemp(100.4,this)">100.4°F</button>
+            <button class="demo-btn warn" data-temp="101.3" onclick="demoLogTemp(101.3,this)">101.3°F ⚠</button>
+          </div>
+          <div class="demo-module-sub">Pain — tap a severity, then a location</div>
+          <div class="demo-chip-row" id="demoPainChips">
+            <button class="demo-chip" onclick="demoSelPain(1,this)">1</button>
+            <button class="demo-chip" onclick="demoSelPain(2,this)">2</button>
+            <button class="demo-chip" onclick="demoSelPain(3,this)">3</button>
+            <button class="demo-chip" onclick="demoSelPain(4,this)">4</button>
+            <button class="demo-chip" onclick="demoSelPain(5,this)">5</button>
+          </div>
+          <select class="demo-select" id="demoPainZone" onchange="demoSetZone()">
+            <option value="">Body-map location (the app has 32 zones)</option>
+            <option>Chest</option>
+            <option>Lower back</option>
+            <option>Left knee</option>
+            <option>Right shoulder</option>
+            <option>Abdomen</option>
+            <option>Left hip</option>
+            <option>Arms</option>
+            <option>Legs</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- live Doctor Report summary -->
+      <div class="demo-summary">
+        <div class="demo-sample-badge">Sample data</div>
+        <div class="demo-summary-title" id="demoSumTitle">Today — Amir</div>
+        <div class="demo-summary-sub">Live snapshot · updates as you tap</div>
+
+        <div class="demo-alert" id="demoAlert">
+          <div class="sv-dot sv-dot-warn"></div>
+          <div class="demo-alert-txt">101.3°F is the SCD fever threshold — SickleStrong's Emergency Alerts surface it the moment you log it.</div>
+        </div>
+
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-teal" id="demoMedDot"></div>
+          <div>
+            <div class="sv-name">Medications</div>
+            <div class="sv-sub" id="demoMedSub">Tap to check off doses</div>
+          </div>
+          <div class="sv-val" id="demoMedVal" style="color:rgba(255,255,255,.7);">0 / 3</div>
+        </div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-teal"></div>
+          <div>
+            <div class="sv-name">Hydration</div>
+            <div class="sv-sub" id="demoHydroSub">Goal 48 oz / day</div>
+          </div>
+          <div class="sv-val" id="demoHydroVal" style="color:rgba(255,255,255,.7);">16 oz</div>
+        </div>
+        <div class="sv-row">
+          <div class="sv-dot sv-dot-ok" id="demoPainDot"></div>
+          <div>
+            <div class="sv-name">Pain episodes</div>
+            <div class="sv-sub" id="demoPainSub">None logged today</div>
+          </div>
+          <div class="sv-val" id="demoPainVal" style="color:#5dffc7;">0</div>
+        </div>
+        <div class="sv-row" style="margin-bottom:0;">
+          <div class="sv-dot sv-dot-teal" id="demoTempDot"></div>
+          <div>
+            <div class="sv-name">Last temperature</div>
+            <div class="sv-sub" id="demoTempSub">Not logged yet</div>
+          </div>
+          <div class="sv-val" id="demoTempVal" style="color:rgba(255,255,255,.7);">—</div>
+        </div>
+
+        <div class="demo-report-note">
+          Everything here rolls into a <strong>Doctor Report</strong> — the same 90-day summary shown above, ready to hand your care team.
         </div>
       </div>
     </div>
@@ -1246,6 +1524,132 @@
   document.querySelectorAll('[href*="sicklestrong-v2"]').forEach(el => {
     el.addEventListener('click', () => trackEvent('app_link_click'));
   });
+
+  // ── INTERACTIVE DEMO (sample data · nothing is saved) ──
+  const demoData = {
+    amir: {
+      label: 'Amir', hydgoal: 48, water: 16, temp: null, pain: null, painSev: 0, zone: '',
+      meds: [
+        { name: 'Hydroxyurea',  time: '8:00 AM', taken: false },
+        { name: 'Folic Acid',   time: '8:00 AM', taken: false },
+        { name: 'Penicillin V', time: '8:00 PM', taken: false }
+      ]
+    },
+    jordan: {
+      label: 'Jordan', hydgoal: 64, water: 24, temp: null, pain: null, painSev: 0, zone: '',
+      meds: [
+        { name: 'Hydroxyurea', time: '9:00 AM', taken: false },
+        { name: 'Folic Acid',  time: '9:00 PM', taken: false }
+      ]
+    }
+  };
+  let demoCur = 'amir';
+  const $d = (id) => document.getElementById(id);
+
+  function demoSwitch(p) {
+    if (!demoData[p]) return;
+    demoCur = p;
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.toggle('active', t.dataset.profile === p));
+    document.querySelectorAll('#demoPainChips .demo-chip').forEach(c => c.classList.remove('sel'));
+    document.querySelectorAll('#demoTempBtns .demo-btn').forEach(b => b.classList.remove('sel'));
+    const zoneSel = $d('demoPainZone'); if (zoneSel) zoneSel.value = '';
+    demoRenderMeds();
+    demoRender();
+  }
+
+  function demoRenderMeds() {
+    const d = demoData[demoCur];
+    $d('demoMeds').innerHTML = d.meds.map((m, i) => (
+      '<div class="demo-med ' + (m.taken ? 'taken' : '') + '" onclick="demoToggleMed(' + i + ')">' +
+        '<div class="demo-check">' + (m.taken ? '✓' : '') + '</div>' +
+        '<div><div class="demo-med-name">' + m.name + '</div>' +
+        '<div class="demo-med-time">' + m.time + '</div></div>' +
+      '</div>'
+    )).join('');
+  }
+
+  function demoToggleMed(i) { const d = demoData[demoCur]; d.meds[i].taken = !d.meds[i].taken; demoRenderMeds(); demoRender(); }
+  function demoAddWater(oz) { const d = demoData[demoCur]; d.water = Math.min(d.hydgoal, d.water + oz); demoRender(); }
+  function demoResetWater() { demoData[demoCur].water = 0; demoRender(); }
+
+  function demoLogTemp(t, el) {
+    demoData[demoCur].temp = t;
+    document.querySelectorAll('#demoTempBtns .demo-btn').forEach(b => b.classList.remove('sel'));
+    if (el) el.classList.add('sel');
+    demoRender();
+  }
+
+  function demoSelPain(sev, el) {
+    const d = demoData[demoCur];
+    d.painSev = sev;
+    d.pain = { sev: sev, zone: d.zone || 'Unspecified' };
+    document.querySelectorAll('#demoPainChips .demo-chip').forEach(c => c.classList.remove('sel'));
+    if (el) el.classList.add('sel');
+    demoRender();
+  }
+
+  function demoSetZone() {
+    const d = demoData[demoCur];
+    d.zone = $d('demoPainZone').value;
+    if (d.pain) d.pain.zone = d.zone || 'Unspecified';
+    demoRender();
+  }
+
+  function demoRender() {
+    const d = demoData[demoCur];
+    $d('demoSumTitle').textContent = 'Today — ' + d.label;
+
+    // medications
+    const taken = d.meds.filter(m => m.taken).length, total = d.meds.length;
+    const allMeds = taken === total;
+    $d('demoMedMeta').textContent = taken + ' / ' + total + ' taken';
+    $d('demoMedVal').textContent = taken + ' / ' + total;
+    $d('demoMedVal').style.color = allMeds ? '#5dffc7' : 'rgba(255,255,255,.7)';
+    $d('demoMedDot').className = 'sv-dot ' + (allMeds ? 'sv-dot-ok' : 'sv-dot-teal');
+    $d('demoMedSub').textContent = allMeds ? 'All doses logged today' : 'Tap to check off doses';
+
+    // hydration
+    $d('demoHydroMeta').textContent = d.water + ' / ' + d.hydgoal + ' oz';
+    $d('demoHydroSub').textContent = 'Goal ' + d.hydgoal + ' oz / day';
+    $d('demoHydroVal').textContent = d.water + ' oz';
+    const pct = Math.min(100, Math.round(d.water / d.hydgoal * 100));
+    $d('demoHydroBar').style.width = pct + '%';
+    $d('demoHydroVal').style.color = pct >= 100 ? '#5dffc7' : 'rgba(255,255,255,.7)';
+
+    // pain
+    if (d.pain) {
+      $d('demoPainVal').textContent = '1';
+      $d('demoPainVal').style.color = '#ff8aad';
+      $d('demoPainSub').textContent = 'Severity ' + d.pain.sev + ' / 5 · ' + d.pain.zone;
+      $d('demoPainDot').className = 'sv-dot sv-dot-warn';
+    } else {
+      $d('demoPainVal').textContent = '0';
+      $d('demoPainVal').style.color = '#5dffc7';
+      $d('demoPainSub').textContent = 'None logged today';
+      $d('demoPainDot').className = 'sv-dot sv-dot-ok';
+    }
+
+    // temperature
+    const tv = $d('demoTempVal');
+    if (d.temp !== null) {
+      const fever = d.temp >= 101.3;
+      tv.textContent = d.temp + '°F';
+      tv.style.color = fever ? '#ff8aad' : 'rgba(255,255,255,.7)';
+      $d('demoTempSub').textContent = fever ? 'At or above SCD fever threshold' : 'Below fever threshold';
+      $d('demoTempDot').className = 'sv-dot ' + (fever ? 'sv-dot-warn' : 'sv-dot-ok');
+      $d('demoAlert').classList.toggle('show', fever);
+    } else {
+      tv.textContent = '—';
+      tv.style.color = 'rgba(255,255,255,.7)';
+      $d('demoTempSub').textContent = 'Not logged yet';
+      $d('demoTempDot').className = 'sv-dot sv-dot-teal';
+      $d('demoAlert').classList.remove('show');
+    }
+  }
+
+  // init demo
+  demoRenderMeds();
+  demoRender();
 </script>
 </body>
 </html>
