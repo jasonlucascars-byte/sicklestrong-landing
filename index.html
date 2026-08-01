@@ -662,6 +662,16 @@
     footer a { color: var(--teal); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
+    /* ── BETA RESULT (post-submit confirmation) ── */
+    .beta-result { text-align: center; padding: 8px 4px 4px; animation: betaResultIn .5s ease both; }
+    .beta-result-emoji { font-size: 40px; line-height: 1; margin-bottom: 12px; }
+    .beta-result h3 {
+      font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800;
+      color: var(--ink); letter-spacing: -.5px; margin-bottom: 10px;
+    }
+    .beta-result p { font-size: 15px; color: var(--slate); line-height: 1.6; }
+    @keyframes betaResultIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
     /* ── INTERACTIVE DEMO ── */
     .demo-band { background: var(--mist); }
 
@@ -1212,14 +1222,14 @@
       </div>
       <div class="beta-divider"></div>
       <div class="beta-meta">
-        <div class="beta-meta-big">46 spots remaining</div>
+        <div class="beta-meta-big" id="betaRemaining">46 spots remaining</div>
         <div class="beta-meta-sub">Free lifetime access · No credit card</div>
       </div>
     </div>
     <div class="beta-progress-track">
       <div class="beta-progress-fill" id="betaBar"></div>
     </div>
-    <div class="beta-progress-label">8% filled</div>
+    <div class="beta-progress-label" id="betaFilled">8% filled</div>
     <p style="font-size:16px;color:rgba(255,255,255,.6);margin:28px 0 32px;line-height:1.7;">
       Founding families shape every feature we build. In return, SickleStrong is free — forever. 
       No catch. No hidden fees. You helped build it.
@@ -1388,7 +1398,7 @@
           <div class="form-field"><input type="text" name="name" placeholder="Your name" required /></div>
           <div class="form-field"><input type="email" name="email" placeholder="Email address" required /></div>
           <div class="form-field">
-            <select name="family_type">
+            <select name="family_type" required>
               <option value="">Who are you managing care for?</option>
               <option value="one_child">One child with SCD</option>
               <option value="multiple_children">Multiple children with SCD</option>
@@ -1483,12 +1493,88 @@
 
 <script>
   // ── FORM SUBMIT → FACEBOOK GROUP ──
-  document.getElementById('betaForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (typeof sa_event === 'function') sa_event('beta_form_submitted');
-    if (typeof gtag === 'function') gtag('event', 'beta_signup', { event_category: 'conversion' });
-    window.open('https://www.facebook.com/groups/1343740994540360', '_blank');
-  });
+  (function () {
+    const form = document.getElementById('betaForm');
+    if (!form) return;
+    const FB_GROUP = 'https://www.facebook.com/groups/1343740994540360';
+    const SUBMIT_LABEL = 'Claim Free Lifetime Access →';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Analytics — same signals as before.
+      if (typeof sa_event === 'function') sa_event('beta_form_submitted');
+      if (typeof gtag === 'function') gtag('event', 'beta_signup', { event_category: 'conversion' });
+
+      // Open the Facebook group inside the user gesture so a slow or failed
+      // backend save can never block it or trip a popup blocker.
+      window.open(FB_GROUP, '_blank');
+
+      const btn = form.querySelector('.btn-submit');
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving your spot…'; }
+
+      fetch('/api/beta-signup', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('http_' + r.status)); })
+        .then(function (res) {
+          if (typeof sa_event === 'function') {
+            sa_event(res.founding ? 'beta_signup_founding' : 'beta_signup_waitlisted');
+          }
+          if (res.counts) applyBetaCounts(res.counts);
+          showBetaSuccess(res);
+        })
+        .catch(function (err) {
+          // Backend hiccup: the FB group already opened above. Track it
+          // distinctly from a success, and never block the user.
+          if (typeof sa_event === 'function') sa_event('beta_signup_backend_error');
+          console.warn('beta signup save failed:', err && err.message);
+          if (btn) { btn.disabled = false; btn.textContent = SUBMIT_LABEL; }
+          showBetaNote();
+        });
+    });
+
+    function ensureBox() {
+      let box = document.getElementById('betaResult');
+      if (!box) {
+        box = document.createElement('div');
+        box.id = 'betaResult';
+        box.className = 'beta-result';
+        form.parentNode.insertBefore(box, form.nextSibling);
+      }
+      return box;
+    }
+
+    function showBetaSuccess(res) {
+      const box = ensureBox();
+      form.style.display = 'none';
+      const note = form.parentNode.querySelector('.form-note');
+      if (note) note.style.display = 'none';
+      if (res && res.founding) {
+        const n = res.counts && typeof res.counts.founding_count === 'number' ? res.counts.founding_count : null;
+        box.innerHTML =
+          '<div class="beta-result-emoji">🎉</div>' +
+          '<h3>You’re in' + (n ? ' — founding family #' + n : '') + '!</h3>' +
+          '<p>Your free lifetime access is locked in. We’ve opened the private Beta Family Facebook group in a new tab — come say hello.</p>';
+      } else {
+        box.innerHTML =
+          '<div class="beta-result-emoji">✅</div>' +
+          '<h3>You’re on the priority waitlist!</h3>' +
+          '<p>All 50 founding spots are claimed, so you’re first in line for what comes next — we’ll be in touch. We’ve opened the Beta Family Facebook group in a new tab.</p>';
+      }
+    }
+
+    function showBetaNote() {
+      const box = ensureBox();
+      box.innerHTML =
+        '<p style="font-size:14px;color:var(--slate);margin-top:4px;">' +
+        'We’ve opened the private Beta Family Facebook group in a new tab. If you don’t hear from us shortly, drop your details in the group and we’ll get you set up.' +
+        '</p>';
+    }
+  })();
 
   // ── ANALYTICS HELPER ──
   function trackEvent(name) {
@@ -1509,11 +1595,40 @@
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
   setTimeout(() => document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('vis')), 100);
 
-  // ── BETA PROGRESS BAR ANIMATE ──
-  setTimeout(() => {
+  // ── BETA COUNTER (live from beta_counts via /api/beta-counts) ──
+  function applyBetaCounts(c) {
+    if (!c || typeof c !== 'object') return;
+    const limit = (typeof c.founding_limit === 'number' && c.founding_limit > 0) ? c.founding_limit : 50;
+    let count = (typeof c.founding_count === 'number') ? c.founding_count : 0;
+    count = Math.max(0, Math.min(limit, count));
+    const remaining = Math.max(0, limit - count);
+    const pct = Math.round((count / limit) * 100);
+    const numEl = document.getElementById('betaCount');
+    if (numEl) numEl.innerHTML = '<span>' + count + '</span> / ' + limit;
+    const remEl = document.getElementById('betaRemaining');
+    if (remEl) remEl.textContent = remaining + (remaining === 1 ? ' spot remaining' : ' spots remaining');
+    const fillEl = document.getElementById('betaFilled');
+    if (fillEl) fillEl.textContent = pct + '% filled';
     const bar = document.getElementById('betaBar');
-    if (bar) bar.style.width = '8%';
-  }, 600);
+    if (bar) bar.style.width = Math.max(2, Math.min(100, pct)) + '%';
+  }
+
+  (function loadBetaCounts() {
+    // Neutral loading state, so a failed fetch never leaves a stale/fake number.
+    const numEl = document.getElementById('betaCount');
+    if (numEl) numEl.innerHTML = '<span>—</span> / 50';
+    const remEl = document.getElementById('betaRemaining');
+    if (remEl) remEl.textContent = 'Founding spots open';
+    const fillEl = document.getElementById('betaFilled');
+    if (fillEl) fillEl.textContent = 'Free lifetime access';
+    const bar = document.getElementById('betaBar');
+    if (bar) bar.style.width = '6%';
+
+    fetch('/api/beta-counts', { headers: { 'accept': 'application/json' } })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('http_' + r.status)); })
+      .then(function (c) { applyBetaCounts(c); })
+      .catch(function (err) { console.warn('beta counts unavailable:', err && err.message); });
+  })();
 
   // ── FACEBOOK GROUP CLICKS ──
   document.querySelectorAll('[href*="facebook.com/groups"]').forEach(el => {
