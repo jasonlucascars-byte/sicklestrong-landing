@@ -1465,6 +1465,36 @@
 </footer>
 
 <script>
+  // ── SHARE CODE (?ref=FAM-XXXXXX / NURSE-LEXI) ──
+  // A family (or a partner such as a school nurse) shares a link carrying
+  // their code. Kept for 30 days so a visitor who comes back later still
+  // counts, passed on to every "Open App" link so the app sign-up carries it,
+  // and tagged onto a beta sign-up. The code names a sharer, never a child.
+  window.SS_REF = (function () {
+    const OK = /^[A-Z]{2,8}-[A-Z0-9]{4,12}$/;
+    let ref = null;
+    try {
+      const fromUrl = (new URLSearchParams(location.search).get('ref') || '').trim().toUpperCase();
+      if (OK.test(fromUrl)) {
+        ref = fromUrl;
+        try { localStorage.setItem('ss_ref', JSON.stringify({ code: ref, at: Date.now() })); } catch (e) {}
+      } else {
+        const saved = JSON.parse(localStorage.getItem('ss_ref') || 'null');
+        if (saved && OK.test(saved.code) && Date.now() - saved.at < 30 * 864e5) ref = saved.code;
+      }
+    } catch (e) { ref = null; }
+    if (ref) {
+      document.querySelectorAll('a[href^="https://sicklestrong-v2.netlify.app"]').forEach(function (a) {
+        try {
+          const u = new URL(a.href);
+          u.searchParams.set('ref', ref);
+          a.href = u.href;
+        } catch (e) {}
+      });
+    }
+    return ref;
+  })();
+
   // ── FORM SUBMIT → FACEBOOK GROUP ──
   (function () {
     const form = document.getElementById('betaForm');
@@ -1485,6 +1515,12 @@
 
       const btn = form.querySelector('.btn-submit');
       const payload = Object.fromEntries(new FormData(form).entries());
+      // The tag goes first: the server keeps only 200 characters, and a long
+      // answer must not cut off the code that says who shared the link.
+      if (window.SS_REF) {
+        const tag = '[ref:' + window.SS_REF + ']';
+        payload.referral = (tag + ' ' + (payload.referral || '')).trim().slice(0, 200);
+      }
       if (btn) { btn.disabled = true; btn.textContent = 'Saving your spot…'; }
 
       fetch('/api/beta-signup', {
