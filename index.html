@@ -1021,7 +1021,7 @@
           <div class="sv-dot sv-dot-warn"></div>
           <div>
             <div class="sv-name">Pain Episodes</div>
-            <div class="sv-sub">Avg severity 3.2 / 5</div>
+            <div class="sv-sub">Avg severity 6.4 / 10</div>
           </div>
           <div class="sv-val" style="color:#ff8aad;">7 episodes</div>
         </div>
@@ -1116,11 +1116,11 @@
           </div>
           <div class="demo-module-sub">Pain — tap a severity, then a location</div>
           <div class="demo-chip-row" id="demoPainChips">
-            <button class="demo-chip" onclick="demoSelPain(1,this)">1</button>
             <button class="demo-chip" onclick="demoSelPain(2,this)">2</button>
-            <button class="demo-chip" onclick="demoSelPain(3,this)">3</button>
             <button class="demo-chip" onclick="demoSelPain(4,this)">4</button>
-            <button class="demo-chip" onclick="demoSelPain(5,this)">5</button>
+            <button class="demo-chip" onclick="demoSelPain(6,this)">6</button>
+            <button class="demo-chip" onclick="demoSelPain(8,this)">8</button>
+            <button class="demo-chip" onclick="demoSelPain(10,this)">10</button>
           </div>
           <select class="demo-select" id="demoPainZone" onchange="demoSetZone()">
             <option value="">Body-map location (the app has 32 zones)</option>
@@ -1744,7 +1744,7 @@
     if (d.pain) {
       $d('demoPainVal').textContent = '1';
       $d('demoPainVal').style.color = '#ff8aad';
-      $d('demoPainSub').textContent = 'Severity ' + d.pain.sev + ' / 5 · ' + d.pain.zone;
+      $d('demoPainSub').textContent = 'Severity ' + d.pain.sev + ' / 10 · ' + d.pain.zone;
       $d('demoPainDot').className = 'sv-dot sv-dot-warn';
     } else {
       $d('demoPainVal').textContent = '0';
