@@ -641,7 +641,14 @@
     }
     .btn-submit:hover { opacity: .85; }
 
-    .form-note { text-align: center; font-size: 12px; color: var(--slate); margin-top: 12px; }
+    .form-note { text-align: center; font-size: 14px; line-height: 1.5; color: var(--slate); margin-top: 12px; }
+    .form-disclaimer { margin-top: 6px; }
+    .beta-next { display: flex; flex-direction: column; gap: 10px; margin-top: 18px; }
+    .beta-next a { display: block; text-align: center; padding: 14px 16px; border-radius: 12px; font-weight: 700; font-size: 16px; text-decoration: none; }
+    .beta-next .next-primary { background: var(--teal); color: #fff; }
+    .beta-next .next-secondary { border: 1.5px solid var(--teal); color: var(--teal); }
+    .beta-next-hint { font-size: 14px; margin-top: 10px; }
+    .btn-quiet { align-self: center; font-size: 16px; color: var(--slate); text-decoration: underline; padding: 12px 6px; }
 
     /* ── FOOTER ── */
     footer {
@@ -872,9 +879,7 @@
         <a class="btn-primary" href="#join" onclick="trackEvent('hero_cta_clicked')">
           Join Free Beta →
         </a>
-        <a class="btn-ghost" href="https://sicklestrong-v2.netlify.app" target="_blank" onclick="trackEvent('hero_app_clicked')">
-          Try the App
-        </a>
+        <a class="btn-quiet" href="#try-it" onclick="trackEvent('hero_demo_clicked')">See how it works</a>
       </div>
       <div class="trust-row">
         <div class="trust-pill"><span class="ck">✓</span> First 50 families free forever</div>
@@ -1279,7 +1284,6 @@
         </div>
       </div>
       <div class="testimonial-card fade-up">
-        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
         <blockquote>
           "I sent this app to my daughter, and she told me it's a game changer. It's already helping her manage her daily intake and medicines. She said thank you so much, and that she's going to show it to her doctor — and to other friends she knows living with sickle cell. This is going to change lives."
         </blockquote>
@@ -1379,11 +1383,11 @@
               <option value="caregiver">I'm a caregiver / guardian</option>
             </select>
           </div>
-          <div class="form-field"><input type="text" name="children" placeholder="Ages of children (or your age if self-tracking)" /></div>
           <div class="form-field"><input type="text" name="referral" placeholder="How did you hear about SickleStrong? (optional)" /></div>
           <button type="submit" class="btn-submit">Claim Free Lifetime Access →</button>
         </form>
-        <p class="form-note">After submitting you'll be taken to our private Beta Family Facebook group. We only use your details to contact you about the beta. See our <a href="/privacy.html">Privacy Policy</a>.</p>
+        <p class="form-note">We ask only for your first name, email and who you care for. No health details. We use them only to contact you about the beta. See our <a href="/privacy.html">Privacy Policy</a>.</p>
+        <p class="form-note form-disclaimer">SickleStrong helps you organize information. It does not give medical advice or replace your care team.</p>
       </div>
     </div>
   </div>
@@ -1420,7 +1424,7 @@
         Is my family's health data private and safe?
         <button class="faq-toggle">+</button>
       </div>
-      <div class="faq-a">Your data is stored on your device and never sold to third parties. Sharing is powered by Supabase with row-level security, so only the people you specifically invite to a child can see that child's information — and one child's circle can never see another's, even within the same family. It is never used for ads. Read the full <a href="/privacy.html">Privacy Policy</a>.</div>
+      <div class="faq-a">What you log is saved on your phone, and copied to your account if you sign in so you can share it. It is never sold to third parties. Sharing is powered by Supabase with row-level security, so only the people you specifically invite to a child can see that child's information — and one child's circle can never see another's, even within the same family. It is never used for ads. Read the full <a href="/privacy.html">Privacy Policy</a>.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
@@ -1509,10 +1513,6 @@
       if (typeof sa_event === 'function') sa_event('beta_form_submitted');
       if (typeof gtag === 'function') gtag('event', 'beta_signup', { event_category: 'conversion' });
 
-      // Open the Facebook group inside the user gesture so a slow or failed
-      // backend save can never block it or trip a popup blocker.
-      window.open(FB_GROUP, '_blank');
-
       const btn = form.querySelector('.btn-submit');
       const payload = Object.fromEntries(new FormData(form).entries());
       // The tag goes first: the server keeps only 200 characters, and a long
@@ -1557,6 +1557,18 @@
       return box;
     }
 
+    // Next steps are plain links on the result screen: the app (same email, so
+    // the founding spot matches the account) and the Facebook group (optional).
+    function nextStepsHtml() {
+      let app = 'https://sicklestrong-v2.netlify.app/';
+      if (window.SS_REF) app += '?ref=' + encodeURIComponent(window.SS_REF);
+      return '<div class="beta-next">' +
+        '<a class="next-primary" href="' + app + '" target="_blank" rel="noopener" onclick="trackEvent(\'beta_open_app_clicked\')">Open SickleStrong</a>' +
+        '<a class="next-secondary" href="' + FB_GROUP + '" target="_blank" rel="noopener" onclick="trackEvent(\'fb_group_clicked\')">Join the Beta Family Facebook group</a>' +
+        '</div>' +
+        '<p class="beta-next-hint">When you create your account in the app, use the same email you just gave us so your spot matches.</p>';
+    }
+
     function showBetaSuccess(res) {
       const box = ensureBox();
       form.style.display = 'none';
@@ -1567,12 +1579,12 @@
         box.innerHTML =
           '<div class="beta-result-emoji">🎉</div>' +
           '<h3>You’re in' + (n ? ' — founding family #' + n : '') + '!</h3>' +
-          '<p>Your free lifetime access is locked in. We’ve opened the private Beta Family Facebook group in a new tab — come say hello.</p>';
+          '<p>Your free lifetime access is locked in. Next, open the app and create your account.</p>' + nextStepsHtml();
       } else {
         box.innerHTML =
           '<div class="beta-result-emoji">✅</div>' +
           '<h3>You’re on the priority waitlist!</h3>' +
-          '<p>All 50 founding spots are claimed, so you’re first in line for what comes next — we’ll be in touch. We’ve opened the Beta Family Facebook group in a new tab.</p>';
+          '<p>All 50 founding spots are claimed, so you’re first in line for what comes next — we’ll be in touch. You can still try the app and join the community.</p>' + nextStepsHtml();
       }
     }
 
@@ -1580,7 +1592,7 @@
       const box = ensureBox();
       box.innerHTML =
         '<p style="font-size:14px;color:var(--slate);margin-top:4px;">' +
-        'We’ve opened the private Beta Family Facebook group in a new tab. If you don’t hear from us shortly, drop your details in the group and we’ll get you set up.' +
+        'We couldn’t save your details just now. Please tap the button to try again, or join the Facebook group and message us there and we’ll get you set up.' +
         '</p>';
     }
   })();
